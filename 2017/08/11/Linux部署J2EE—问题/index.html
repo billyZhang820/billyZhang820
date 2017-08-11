@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue3.png">
 <meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/solve.png">
 <meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue4.png">
-<meta property="og:updated_time" content="2017-08-11T05:34:30.515Z">
+<meta property="og:updated_time" content="2017-08-11T06:43:31.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux部署J2EE---问题">
 <meta name="twitter:description" content="##Linux部署J2EE—问题  问题描述  近期有一个自己写的项目需要发布到阿里云服务器，因而将其打包为war发布到阿里云上，但是在部署的过程中产生了很费解的问题。">
@@ -398,23 +398,23 @@
 <p><strong>二、错误原因：</strong></p>
 <p>类似错误均属于Java版本问题，即JDK版本过低，只要选择相对应的JDK版本编译即可。<br>48，49，50是Java编译器内部的版本号：<br>Unsupported<br> major.minor version 50.0 对应于 JDK1.6（JRE1.6）<br>Unsupported<br> major.minor version 49.0 对应于 JDK1.5（JRE1.5）<br>Unsupported<br> major.minor version 48.0 对应于 JDK1.4（JRE1.4）</p>
 <p> 查看阿里云服务器java version：</p>
-<p><img src="./aliyun.png" alt="Alt text"></p>
+<p><img src="/2017/08/11/Linux部署J2EE—问题/aliyun.png" alt="Alt text"></p>
 <p><strong>分析:</strong>   java 版本没有问题 ，都是jdk1. 8 ， 但是为什么报错。</p>
-<p> 之后： 把项目再次部署到服务器，查看启动日志： 再次搜索错误原因，由下面的问题得到灵感：<br><img src="./issue1.png" alt="Alt text"></p>
+<p> 之后： 把项目再次部署到服务器，查看启动日志： 再次搜索错误原因，由下面的问题得到灵感：<br><img src="/2017/08/11/Linux部署J2EE—问题/issue1.png" alt="Alt text"></p>
 <hr>
 <p> <strong>分析：</strong> 想到，问题原因是 高版本编译的项目使用了低版本的jdk来编译，但是linux 的 jdk   java<br> 环境 确实是jdk 1.8 。由上面的问题可以看出，在项目部署到Tomcat后，tomcat默认的jre  或许并不是<br> jdk 1.8,因为我的 linux服务器安装了两个jdk。因而查看之，</p>
 <blockquote>
 <p>果然：linux自带jdk1.8，但是我的tomcat所使用的jre是自己安装的jdk1.7。</p>
 </blockquote>
-<p><img src="./issue2.png" alt="Alt text"></p>
-<p>　　我的tomcat的jre编译环境是 /home/liushenliang/java/jdk，查看后发现：<br><img src="./issue3.png" alt="Alt text"></p>
+<p><img src="/2017/08/11/Linux部署J2EE—问题/issue2.png" alt="Alt text"></p>
+<p>　　我的tomcat的jre编译环境是 /home/liushenliang/java/jdk，查看后发现：<br><img src="/2017/08/11/Linux部署J2EE—问题/issue3.png" alt="Alt text"></p>
 <p>　　该jre环境是jdk1.7,问题找到：</p>
 <blockquote>
 <p>解决方法</p>
 </blockquote>
-<p><img src="./solve.png" alt="Alt text"></p>
+<p><img src="/2017/08/11/Linux部署J2EE—问题/solve.png" alt="Alt text"></p>
 <p>　　修改tomcat的文件 setclasspath.sh 为：</p>
-<p><img src="./issue4.png" alt="Alt text"></p>
+<p><img src="/2017/08/11/Linux部署J2EE—问题/issue4.png" alt="Alt text"></p>
 <p>　　修改tomcat 编译环境为jdk1.8完成，重新部署，成功。</p>
 
       
