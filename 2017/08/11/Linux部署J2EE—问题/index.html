@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="博客," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="##Linux部署J2EE—问题  问题描述  近期有一个自己写的项目需要发布到阿里云服务器，因而将其打包为war发布到阿里云上，但是在部署的过程中产生了很费解的问题。">
+<meta name="keywords" content="博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux部署J2EE---问题">
+<meta property="og:url" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/index.html">
+<meta property="og:site_name" content="九点钟的太阳">
+<meta property="og:description" content="##Linux部署J2EE—问题  问题描述  近期有一个自己写的项目需要发布到阿里云服务器，因而将其打包为war发布到阿里云上，但是在部署的过程中产生了很费解的问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/aliyun.png">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue1.png">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue2.png">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue3.png">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/solve.png">
+<meta property="og:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/issue4.png">
+<meta property="og:updated_time" content="2017-08-11T05:34:30.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux部署J2EE---问题">
+<meta name="twitter:description" content="##Linux部署J2EE—问题  问题描述  近期有一个自己写的项目需要发布到阿里云服务器，因而将其打包为war发布到阿里云上，但是在部署的过程中产生了很费解的问题。">
+<meta name="twitter:image" content="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/aliyun.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/"/>
+
+
+
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+  <title>Linux部署J2EE---问题 | 九点钟的太阳</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">九点钟的太阳</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://billyzhang.coding.me/2017/08/11/Linux部署J2EE—问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="billyzhang820">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ougpbcd1r.bkt.clouddn.com/20161005110831_MRuwT.thumb.700_0.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="九点钟的太阳">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux部署J2EE---问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-11T13:22:11+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##Linux部署J2EE—问题<br><br></p>
+<blockquote>
+<p>问题描述</p>
+</blockquote>
+<p>近期有一个自己写的项目需要发布到阿里云服务器，因而将其打包为war发布到阿里云上，但是在部署的过程中产生了很费解的问题。</p>
+<a id="more"></a>
+<blockquote>
+<p>问题代码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">org.springframework.web.context.ContextLoader.initWebApplicationContext Context initialization failed</div><div class="line"> org.springframework.beans.factory.BeanCreationException Error creating bean with name &apos;sessionFactory&apos; defined in ServletContext resource [/WEB-INF/config/DaoContext.xml] Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException  Failed to convert property value of type [java.util.ArrayList] to required type [java.lang.Class[]] for property &apos;annotatedClasses&apos;; nested exception is java.lang.IllegalArgumentException  Error loading class</div><div class="line"></div><div class="line">Caused by  org.springframework.beans.TypeMismatchException  Failed to convert property value of type [java.util.ArrayList] to required type [java.lang.Class[]] for property &apos;annotatedClasses&apos;; nested exception is java.lang.IllegalArgumentException  Error loading class [org.common.RBAC.domain.Account]  problem with class file or dependent class.</div><div class="line"></div><div class="line">Caused by  java.lang.UnsupportedClassVersionError  org/common/RBAC/domain/Account   Unsupported major.minor version 52.0 (unable to load class [org.common.RBAC.domain.Account])</div></pre></td></tr></table></figure>
+<blockquote>
+<p>问题分析</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Error creating bean with name &apos;sessionFactory&apos; defined in ServletContext resource [/WEB-INF/config/DaoContext.xml]</div><div class="line"></div><div class="line">[java] view plain copy</div><div class="line">Initialization of bean failed; nested exception is org.springframework.beans.TypeMismatchException</div><div class="line">[java] view plain copy</div><div class="line">Failed to convert property value of type [java.util.ArrayList] to required type [java.lang.Class[]] for property &apos;annotatedClasses&apos;;</div><div class="line">[java] view plain copy</div><div class="line">nested exception is java.lang.IllegalArgumentException  Error loading class [org.common.RBAC.domain.Account]</div><div class="line">[java] view plain copy</div><div class="line">problem with class file or dependent class.</div></pre></td></tr></table></figure>
+<p><br><br>&ensp;&ensp;大体意思是说：springframework 无法把 ArrayList 转换为所需要的class[]数组的形式，annotationClasses是我的Hibernate配置的实体类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;property name=&quot;annotatedClasses&quot;&gt;</div><div class="line">            &lt;list&gt;</div><div class="line">                &lt;!-- common模块中的持久化类 --&gt;</div><div class="line">                &lt;value&gt;org.common.RBAC.domain.Account&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.RBAC.domain.Role&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.RBAC.domain.Power&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.RBAC.domain.Pictures&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.Store&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.Address&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.Province_addr&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.City_addr&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.Areacounty_addr&lt;/value&gt;</div><div class="line">                &lt;value&gt;org.common.FDBK.domain.Goods&lt;/value&gt;</div><div class="line">            &lt;/list&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line"></div><div class="line">&lt;br&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>解决办法</p>
+</blockquote>
+<p>　　就是说上面这个list无法转换。<br>　　解决方法：在google上搜索发现解决办法：<a href="https //stackoverflow.com/questions/26367159/initialization-of-bean-failed-nested-exception-is-org-springframework-beans">google解决办法</a></p>
+<p><code>&lt;property name=&quot;annotatedClasses&quot;&gt;  改为 packagesToScan ，h试试呗。</code><br>　　<br>改完之后，这个问题是解决了，但是又有问题：</p>
+<p>org.springframework.web.context.ContextLoader.initWebApplicationContext Context initialization failed org.springframework.beans.factory.CannotLoadBeanClassException  Error loading class [org.common.RBAC.dao.impl.AccountDaoImpl] for bean with name ‘accountDao’ defined in ServletContext resource [/WEB-INF/config/CommonsBeans.xml]  problem with class file or dependent class; nested exception is java.lang.UnsupportedClassVersionError  org/common/RBAC/dao/impl/AccountDaoImpl   Unsupported major.minor version 52.0 (unable to load class [org.common.RBAC.dao.impl.AccountDaoImpl])<br>Deploying web application directory [/home/liushengliang/tomcat/tomcat/webapps/docs] 02-Jun-2017 15 49 46.785 INFO [20] org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading Illegal access  this web application instance has been stopped already. Could not load []. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access. java.lang.IllegalStateException  Illegal access  this web application instance has been stopped already. Could not load []. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access. at org.apache.catalina.loader.WebappClassLoaderBase.checkStateFor</p>
+<p><br></p>
+<blockquote>
+<p>解决办法</p>
+</blockquote>
+<p><br><br>　　上面两个问题都有cause by ： 原因都指向java 版本问题 ，意思说： 高版本jdk编译的项目运行在了低版本环境上，因而<br>出现错误。</p>
+<p><strong>一、错误现象：</strong></p>
+<p>当改变了jdk版本时，在编译java时，会遇到Unsupported major.minor version错误。<br>错误信息如下 ：</p>
+<p>Unsupported major.minor version 50.0<br>Unsupported major.minor version 49.0 （我在jdk1.4 和1.5切换时就遇到了这个错误）<br>Unsupported major.minor version 48.0</p>
+<p><strong>二、错误原因：</strong></p>
+<p>类似错误均属于Java版本问题，即JDK版本过低，只要选择相对应的JDK版本编译即可。<br>48，49，50是Java编译器内部的版本号：<br>Unsupported<br> major.minor version 50.0 对应于 JDK1.6（JRE1.6）<br>Unsupported<br> major.minor version 49.0 对应于 JDK1.5（JRE1.5）<br>Unsupported<br> major.minor version 48.0 对应于 JDK1.4（JRE1.4）</p>
+<p> 查看阿里云服务器java version：</p>
+<p><img src="./aliyun.png" alt="Alt text"></p>
+<p><strong>分析:</strong>   java 版本没有问题 ，都是jdk1. 8 ， 但是为什么报错。</p>
+<p> 之后： 把项目再次部署到服务器，查看启动日志： 再次搜索错误原因，由下面的问题得到灵感：<br><img src="./issue1.png" alt="Alt text"></p>
+<hr>
+<p> <strong>分析：</strong> 想到，问题原因是 高版本编译的项目使用了低版本的jdk来编译，但是linux 的 jdk   java<br> 环境 确实是jdk 1.8 。由上面的问题可以看出，在项目部署到Tomcat后，tomcat默认的jre  或许并不是<br> jdk 1.8,因为我的 linux服务器安装了两个jdk。因而查看之，</p>
+<blockquote>
+<p>果然：linux自带jdk1.8，但是我的tomcat所使用的jre是自己安装的jdk1.7。</p>
+</blockquote>
+<p><img src="./issue2.png" alt="Alt text"></p>
+<p>　　我的tomcat的jre编译环境是 /home/liushenliang/java/jdk，查看后发现：<br><img src="./issue3.png" alt="Alt text"></p>
+<p>　　该jre环境是jdk1.7,问题找到：</p>
+<blockquote>
+<p>解决方法</p>
+</blockquote>
+<p><img src="./solve.png" alt="Alt text"></p>
+<p>　　修改tomcat的文件 setclasspath.sh 为：</p>
+<p><img src="./issue4.png" alt="Alt text"></p>
+<p>　　修改tomcat 编译环境为jdk1.8完成，重新部署，成功。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://ougpbcd1r.bkt.clouddn.com/20161005110831_MRuwT.thumb.700_0.jpeg"
+               alt="billyzhang820" />
+          <p class="site-author-name" itemprop="name">billyzhang820</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/zlb820" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017-08 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">billyzhang820</span>
+</div>
+
+
+ 
+
+ 
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
