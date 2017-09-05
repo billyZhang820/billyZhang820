@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="博客," />
 
 
 
@@ -94,19 +94,18 @@
 
 
 
-<meta name="description" content="ajax">
+<meta name="description" content="需求 需求分析     现有批量上传的需求,通过上传Excel文件,获取用户uidList">
+<meta name="keywords" content="博客">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ajax上传Excel文件&amp;解析展示">
 <meta property="og:url" content="http://billyzhang.coding.me/2017/09/04/ajax上传Excel文件-解析展示/index.html">
 <meta property="og:site_name" content="九点钟的太阳">
-<meta property="og:description" content="ajax">
+<meta property="og:description" content="需求 需求分析     现有批量上传的需求,通过上传Excel文件,获取用户uidList">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ovr1s0svp.bkt.clouddn.com/blog-pic/170904/BB5IcmF81g.png?imageslim">
-<meta property="og:updated_time" content="2017-09-04T10:24:01.156Z">
+<meta property="og:updated_time" content="2017-09-05T03:04:20.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ajax上传Excel文件&amp;解析展示">
-<meta name="twitter:description" content="ajax">
-<meta name="twitter:image" content="https://ovr1s0svp.bkt.clouddn.com/blog-pic/170904/BB5IcmF81g.png?imageslim">
+<meta name="twitter:description" content="需求 需求分析     现有批量上传的需求,通过上传Excel文件,获取用户uidList">
 
 
 
@@ -310,6 +309,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -333,7 +354,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1
+                  1,487
                 </span>
               
 
@@ -349,7 +370,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
@@ -370,7 +391,95 @@
       
 
       
-        <h1 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h1><p><img src="https://ovr1s0svp.bkt.clouddn.com/blog-pic/170904/BB5IcmF81g.png?imageslim" alt="mark"></p>
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><blockquote>
+<p>需求分析</p>
+</blockquote>
+<p>   现有批量上传的需求,通过上传Excel文件,获取用户uidList</p>
+<a id="more"></a>
+<blockquote>
+<p>流程分析</p>
+</blockquote>
+<ul>
+<li><p>页面Excel文件输入框 </p>
+  <tr><br>          <td>批量文件:</td><br>          <td><input type="file" id="idFile" name="idFile" class="  "></td><br>  </tr>
+</li>
+<li><p>输入框事件</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">   //上传 excel文件</div><div class="line">function importExcel(formData) &#123;</div><div class="line">    $.ajax(&#123;</div><div class="line">        url: &quot;lehai/giveMedalToUserAction!readUserIdList&quot;,</div><div class="line">        type: &apos;POST&apos;,</div><div class="line">        cache: false,</div><div class="line">        data: formData,</div><div class="line">        dataType : &quot;json&quot;,</div><div class="line">        processData: false,</div><div class="line">        contentType: false</div><div class="line">    &#125;).done(function(msg) &#123;</div><div class="line">        if (msg.result == 1) &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        if (msg.result == 0) &#123;</div><div class="line">            showMessage(&quot;&quot;+msg.resultText );</div><div class="line">            $(&quot;#idFile&quot;).val(&quot;&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;).fail(function(msg) &#123;</div><div class="line">        showMessage(&quot;读取错误！&quot;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//选择文件事件</div><div class="line">$(&quot;#idFile&quot;).change(function()&#123;</div><div class="line">    $(&quot;#roomid&quot;).val(&quot;&quot;);</div><div class="line">    $(&quot;#showid&quot;).val(&quot;&quot;);</div><div class="line">    var str=$(&quot;#idFile&quot;).val();</div><div class="line">    if (checkFileType(str))&#123;</div><div class="line">        var formData = new FormData();</div><div class="line">        formData.append(&apos;idFile&apos;, $(&apos;#idFile&apos;)[0].files[0]);</div><div class="line">        importExcel(formData);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">function checkFileType(str)&#123;</div><div class="line">    var index=str.lastIndexOf(&apos;.&apos;);</div><div class="line">    var strtype=str.substr(index,str.length);</div><div class="line"></div><div class="line">    strtype=strtype.toLowerCase();</div><div class="line">    if (strtype == &quot;&quot;) &#123;</div><div class="line">        return false;</div><div class="line">    &#125;else if (strtype == &quot;.xls&quot;)&#123;</div><div class="line"></div><div class="line">        return true;</div><div class="line">    &#125;else&#123;</div><div class="line">        $(&quot;#idFile&quot;).val(&quot;&quot;);</div><div class="line">        showMessage(&quot;文件格式为.xls&quot;);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div><div class="line">function checkFile(filename)</div><div class="line">&#123;</div><div class="line">    var str = filename.val()</div><div class="line">    if (str.length == 0) &#123;</div><div class="line">        showMessage(&quot;批量发放文件不能为空！&quot;);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说明： 通过jquery的 change()事件，在选择文件后，触发ajax上传方法importExcel().<br>不同的是，文件的ajax上传略有不同，下面比较一下普通的ajax和文件上传ajax的区别。</p>
+<blockquote>
+<p>1.普通的jax</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;  </div><div class="line">     url : &quot;http://localhost:8080/STS/rest/user&quot;,  </div><div class="line">     type : &quot;POST&quot;,  </div><div class="line">     data : $( &apos;#postForm&apos;).serialize(),  </div><div class="line">     success : function(data) &#123;  </div><div class="line">          $( &apos;#serverResponse&apos;).html(data);  </div><div class="line">     &#125;,  </div><div class="line">     error : function(data) &#123;  </div><div class="line">          $( &apos;#serverResponse&apos;).html(data.status + &quot; : &quot; + data.statusText + &quot; : &quot; + data.responseText);  </div><div class="line">     &#125;  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>通常我们提交（使用submit button）时，会把form中的所有表格元素的name与value组成一个queryString，提交到后台。这用jQuery的方法来说，就是serialize。<br>通过$(‘#postForm’).serialize()可以对form表单进行序列化，从而将form表单中的所有参数传递到服务端。</p>
+<p>但是上述方式，只能传递一般的参数，上传文件的文件流是无法被序列化并传递的。<br>不过如今主流浏览器都开始支持一个叫做FormData的对象，有了这个FormData，我们就可以轻松地使用Ajax方式进行文件上传了。</p>
+<blockquote>
+<p>2.文件ajax上传</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;form id=&quot;uploadForm&quot; enctype=&quot;multipart/form-data&quot;&gt;</div><div class="line">    &lt;input id=&quot;file&quot; type=&quot;file&quot; name=&quot;file&quot;/&gt;</div><div class="line">    &lt;button id=&quot;upload&quot; type=&quot;button&quot;&gt;upload&lt;/button&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<p>javascript代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">    url: &apos;/upload&apos;,</div><div class="line">    type: &apos;POST&apos;,</div><div class="line">    cache: false,</div><div class="line">    data: new FormData($(&apos;#uploadForm&apos;)[0]),</div><div class="line">    processData: false,</div><div class="line">    contentType: false</div><div class="line">&#125;).done(function(res) &#123;</div><div class="line">&#125;).fail(function(res) &#123;&#125;);</div></pre></td></tr></table></figure></p>
+<p>  可以看到,主要的区别是文件的ajax上传使用了FormData对象添加字段方式。</p>
+<hr>
+<blockquote>
+<p>3.FormData 对象的简介</p>
+</blockquote>
+<p>XMLHttpRequest Level 2添加了一个新的接口FormData.利用FormData对象,我们可以通过JavaScript用一些键值对来模拟一系列表单控件,我们还可以使用XMLHttpRequest的send()方法来异步的提交这个”表单”.比起普通的ajax,使用FormData的最大优点就是我们可以异步上传一个二进制文件.      <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/FormData" target="_blank" rel="external"> 参考链接 </a></p>
+<h4 id="FormData-append"><a href="#FormData-append" class="headerlink" title="FormData.append"></a>FormData.append</h4><p>本方法用于向已存在的键添加新的值，如该键不存在，新建之。</p>
+<p><strong>语法</strong></p>
+<p>formData.append(name, value);<br>formData.append(name, value, filename);</p>
+<p><strong>注:</strong> 通过 FormData.append()方法赋给字段的值若是数字会被自动转换为字符(字段的值可以是一个Blob对象,一个File对象,或者一个字符串,剩下其他类型的值都会被自动转换成字符串).</p>
+<h5 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h5><p><strong>name</strong><br>键 (key)， 对应表单域</p>
+<p><strong>value</strong></p>
+<p><strong>表单域的值</strong></p>
+<p>filename (optional)<br>The filename reported to the server (a USVString), when a Blob or File is passed as the second parameter. The default filename for Blob objects is “blob”.<br>FormData.delete</p>
+<p><strong>将一对键和值从 FormData 对象中删除。</strong></p>
+<p>formData.delete(username);<br>FormData.get</p>
+<p><strong>返回给定键的第一个值</strong></p>
+<p>formData.append(‘username’, ‘Justin’);<br>formData.append(‘username’, ‘Chris’);<br>formData.get(username);    // “Justin”<br>FormData.getAll</p>
+<p><strong>返回给定键的所有值</strong></p>
+<p>formData.append(‘username’, ‘Justin’);<br>formData.append(‘username’, ‘Chris’);<br>formData.getAll(username);    // [“Justin”, “Chris”]<br>FormData.has</p>
+<p><strong>检查是否包含给定键，返回 true 或 false</strong></p>
+<p>formData.has(username);<br>FormData.set</p>
+<p><strong>设置给定键的值</strong></p>
+<p>formData.set(name, value);<br>formData.set(name, value, filename);</p>
+<blockquote>
+<p>3.1 Formdata使用</p>
+<h4 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a>Constructor</h4></blockquote>
+<p>FormData()</p>
+<p>想得到一个FormData对象：<br>var formdata = new FormData();<br>W3c草案提供了三种方案来获取或修改FormData。</p>
+<p>方案1：创建一个空的FormData对象，然后再用append方法逐个添加键值对：<br>var formdata = new FormData();<br>formdata.append(“name”, “呵呵”);<br>formdata.append(“url”, “<a href="http://www.baidu.com/" target="_blank" rel="external">http://www.baidu.com/</a>“);</p>
+<p>方案2：取得form元素对象，将它作为参数传入FormData对象中！<br>var formobj =  document.getElementById(“form”);<br>var formdata = new FormData(formobj);<br>方案3：利用form元素对象的getFormData方法生成它！<br>var formobj =  document.getElementById(“form”);<br>var formdata = formobj.getFormData()</p>
+<p><strong>值得注意几点：</strong></p>
+<ol>
+<li>processData设置为false。因为data值是FormData对象，不需要对数据做处理。</li>
+<li>cache设置为false，上传文件不需要缓存。</li>
+<li>contentType设置为false，不设置contentType值，因为是由<form>表单构造的FormData对象，且已经声明了属性</form></li>
+<li>enctype=”multipart/form-data”，所以这里设置为false。</li>
+</ol>
+<hr>
+<ul>
+<li>后台代码</li>
+</ul>
+<p>后台的代码主要是对Excel文件的解析。</p>
+<blockquote>
+<p>1.文件流接收</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">protected File idFile;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2.Excel 解析</p>
+</blockquote>
+<p>思路是：通过现有的ExcelAPI,jxl或者POI都可以，解析数据并保存到List对象中，List<string> idList =new ArrayList<string>();。因为我们只需要第一列的数据，因而使用单个List即可。如果是多列数据，可以像这样List<list<string>&gt; 嵌套一个即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public void readUserIdList() &#123;</div><div class="line">     logger.info(&quot;into importExcel&quot;);</div><div class="line">     List&lt;String&gt; idList =new ArrayList&lt;String&gt;();</div><div class="line">     if (!idFile.exists())&#123;</div><div class="line">         printJsonResult(SystemConstants.ERROR_RESULT_TEMPALTE,SystemConstants.OPERATE_ERROR);</div><div class="line">     &#125;else &#123;</div><div class="line">         try &#123;</div><div class="line">             jxl.Workbook book = jxl.Workbook.getWorkbook(idFile);</div><div class="line">             int uidNo = 0;</div><div class="line">             int row_start = 0;</div><div class="line">             jxl.Sheet sheet = book.getSheet(0);</div><div class="line">             for (int i = row_start; i &lt; sheet.getRows(); i++) &#123;</div><div class="line">                 String uid = sheet.getCell(uidNo, i).getContents();</div><div class="line">                 idList.add(uid);</div><div class="line">             &#125;</div><div class="line">             if (CollectionUtils.isEmpty(idList)) &#123;</div><div class="line">                 printJsonResult(SystemConstants.ERROR_RESULT_TEMPALTE,ResourceConstants.EXCEL_DATA_NULL);</div><div class="line">             &#125;else&#123;</div><div class="line">                 request.getSession().setAttribute(&quot;idList&quot;, idList);</div><div class="line">                 printJsonResult(SystemConstants.SUCCESS_RESULT_TEMPALTE, SystemConstants.OPERATE_SUCCESS);</div><div class="line"></div><div class="line">             &#125;</div><div class="line">         &#125; catch (Exception ex) &#123;</div><div class="line">             logger.error(&quot;importExcel ex=&#123;&#125;&quot;,ex);</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">     logger.info(&quot;importExcel idStr=&#123;&#125;&quot;, idList);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></list<string></string></string></p>
+<p>上述示例使用jxl解析Excel，目的是读取excel文件的第一列数据到一个List中，Excel文件格式要求如下：<br>Excel文件第一列为传递的数据，如果是多列只需要循环即可：关于Excel的更多操作请参考以下文章，该文章使用POI解析Excel,虽然方法有区别但是原理想通。<br><a href="http://blog.csdn.net/readiay/article/details/45540067" target="_blank" rel="external">参考</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">| field1    | </div><div class="line">| field2    | </div><div class="line">| field3    | </div><div class="line">| field4    |</div></pre></td></tr></table></figure>
+<ul>
+<li>数据处理</li>
+</ul>
+<p>数据解析到了List里，这下谁都会用了。自己后台使用，或者放到request、session中返回页面都可以。</p>
+<blockquote>
+<p>问题解决</p>
+</blockquote>
+<p><strong>总结：</strong> 没有什么技术难点，重要的是学会使用一些第三方的API,这个对快速简洁开发很重要。</p>
 
       
     </div>
@@ -385,6 +494,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+        </div>
       
 
       
@@ -551,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ajax"><span class="nav-number">1.</span> <span class="nav-text">ajax</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FormData-append"><span class="nav-number">1.1.</span> <span class="nav-text">FormData.append</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参数解释"><span class="nav-number">1.1.1.</span> <span class="nav-text">参数解释</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Constructor"><span class="nav-number">1.2.</span> <span class="nav-text">Constructor</span></a></li></ol></li></ol></div>
             
 
           </div>
