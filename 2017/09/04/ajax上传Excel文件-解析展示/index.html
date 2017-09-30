@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="九点钟的太阳">
 <meta property="og:description" content="需求 需求分析     现有批量上传的需求,通过上传Excel文件,获取用户uidList">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T03:04:20.036Z">
+<meta property="og:updated_time" content="2017-09-20T09:02:28.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ajax上传Excel文件&amp;解析展示">
 <meta name="twitter:description" content="需求 需求分析     现有批量上传的需求,通过上传Excel文件,获取用户uidList">
@@ -406,7 +406,7 @@
 <p>流程分析</p>
 </blockquote>
 <ul>
-<li><p>页面Excel文件输入框 </p>
+<li><p>页面Excel文件输入框</p>
   <tr><br>          <td>批量文件:</td><br>          <td><input type="file" id="idFile" name="idFile" class="  "></td><br>  </tr>
 </li>
 <li><p>输入框事件</p>
@@ -417,7 +417,7 @@
 <blockquote>
 <p>1.普通的jax</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;  </div><div class="line">     url : &quot;http://localhost:8080/STS/rest/user&quot;,  </div><div class="line">     type : &quot;POST&quot;,  </div><div class="line">     data : $( &apos;#postForm&apos;).serialize(),  </div><div class="line">     success : function(data) &#123;  </div><div class="line">          $( &apos;#serverResponse&apos;).html(data);  </div><div class="line">     &#125;,  </div><div class="line">     error : function(data) &#123;  </div><div class="line">          $( &apos;#serverResponse&apos;).html(data.status + &quot; : &quot; + data.statusText + &quot; : &quot; + data.responseText);  </div><div class="line">     &#125;  </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">     url : &quot;http://localhost:8080/STS/rest/user&quot;,</div><div class="line">     type : &quot;POST&quot;,</div><div class="line">     data : $( &apos;#postForm&apos;).serialize(),</div><div class="line">     success : function(data) &#123;</div><div class="line">          $( &apos;#serverResponse&apos;).html(data);</div><div class="line">     &#125;,</div><div class="line">     error : function(data) &#123;</div><div class="line">          $( &apos;#serverResponse&apos;).html(data.status + &quot; : &quot; + data.statusText + &quot; : &quot; + data.responseText);</div><div class="line">     &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>通常我们提交（使用submit button）时，会把form中的所有表格元素的name与value组成一个queryString，提交到后台。这用jQuery的方法来说，就是serialize。<br>通过$(‘#postForm’).serialize()可以对form表单进行序列化，从而将form表单中的所有参数传递到服务端。</p>
 <p>但是上述方式，只能传递一般的参数，上传文件的文件流是无法被序列化并传递的。<br>不过如今主流浏览器都开始支持一个叫做FormData的对象，有了这个FormData，我们就可以轻松地使用Ajax方式进行文件上传了。</p>
 <blockquote>
@@ -477,7 +477,7 @@
 </blockquote>
 <p>思路是：通过现有的ExcelAPI,jxl或者POI都可以，解析数据并保存到List对象中，List<string> idList =new ArrayList<string>();。因为我们只需要第一列的数据，因而使用单个List即可。如果是多列数据，可以像这样List<list<string>&gt; 嵌套一个即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public void readUserIdList() &#123;</div><div class="line">     logger.info(&quot;into importExcel&quot;);</div><div class="line">     List&lt;String&gt; idList =new ArrayList&lt;String&gt;();</div><div class="line">     if (!idFile.exists())&#123;</div><div class="line">         printJsonResult(SystemConstants.ERROR_RESULT_TEMPALTE,SystemConstants.OPERATE_ERROR);</div><div class="line">     &#125;else &#123;</div><div class="line">         try &#123;</div><div class="line">             jxl.Workbook book = jxl.Workbook.getWorkbook(idFile);</div><div class="line">             int uidNo = 0;</div><div class="line">             int row_start = 0;</div><div class="line">             jxl.Sheet sheet = book.getSheet(0);</div><div class="line">             for (int i = row_start; i &lt; sheet.getRows(); i++) &#123;</div><div class="line">                 String uid = sheet.getCell(uidNo, i).getContents();</div><div class="line">                 idList.add(uid);</div><div class="line">             &#125;</div><div class="line">             if (CollectionUtils.isEmpty(idList)) &#123;</div><div class="line">                 printJsonResult(SystemConstants.ERROR_RESULT_TEMPALTE,ResourceConstants.EXCEL_DATA_NULL);</div><div class="line">             &#125;else&#123;</div><div class="line">                 request.getSession().setAttribute(&quot;idList&quot;, idList);</div><div class="line">                 printJsonResult(SystemConstants.SUCCESS_RESULT_TEMPALTE, SystemConstants.OPERATE_SUCCESS);</div><div class="line"></div><div class="line">             &#125;</div><div class="line">         &#125; catch (Exception ex) &#123;</div><div class="line">             logger.error(&quot;importExcel ex=&#123;&#125;&quot;,ex);</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">     logger.info(&quot;importExcel idStr=&#123;&#125;&quot;, idList);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></list<string></string></string></p>
 <p>上述示例使用jxl解析Excel，目的是读取excel文件的第一列数据到一个List中，Excel文件格式要求如下：<br>Excel文件第一列为传递的数据，如果是多列只需要循环即可：关于Excel的更多操作请参考以下文章，该文章使用POI解析Excel,虽然方法有区别但是原理想通。<br><a href="http://blog.csdn.net/readiay/article/details/45540067" target="_blank" rel="external">参考</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">| field1    | </div><div class="line">| field2    | </div><div class="line">| field3    | </div><div class="line">| field4    |</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">| field1    |</div><div class="line">| field2    |</div><div class="line">| field3    |</div><div class="line">| field4    |</div></pre></td></tr></table></figure>
 <ul>
 <li>数据处理</li>
 </ul>
@@ -549,6 +549,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/30/tomcat启动容器失败报error-in-opening-zip-file错误/" rel="prev" title="tomcat启动容器失败报error in opening zip file错误">
+                tomcat启动容器失败报error in opening zip file错误 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -645,7 +649,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -656,7 +660,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -667,7 +671,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
